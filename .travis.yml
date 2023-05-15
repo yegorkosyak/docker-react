@@ -1,4 +1,5 @@
 sudo: required
+
 services:
   - docker
 
@@ -7,3 +8,15 @@ before_install:
 
 script:
   - docker run -e CI=true yehor/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-central-1"
+  app: "docker-react-app"
+  env: "docker-react-app-env"
+  bucket_name: "elasticbeanstalk-eu-central-1-880046715827"
+  bucket_pass: "docker-react-app"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
